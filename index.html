@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Mahmoud Al-Hobi | Professional Photo Gallery</title>
+  <link rel="icon" type="image/jpeg" href="th.jpg">
+  <meta name="author" content="Mahmoud Al-Hobi">
+  <meta name="description" content="Premium photography portfolio showcasing stunning visuals from Gaza and Rafah">
+  <meta name="keywords" content="professional photography, Gaza photos, Rafah landscapes, Mahmoud Al-Hobi portfolio">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #34495e;
+      --accent-color: #3498db;
+      --text-color: #333;
+      --light-text: #ecf0f1;
+      --background-color: #f9f9f9;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.4s;
+    }
+    
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 15px;
+      width: 100%;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: var(--light-text);
+      text-align: center;
+      padding: 30px 15px;
+      margin-bottom: 30px;
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2em;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1em;
+      opacity: 0.9;
+      margin-top: 10px;
+    }
+
+    .search-container {
+      margin: 20px auto;
+      max-width: 100%;
+      position: relative;
+      padding: 0 10px;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 12px 20px 12px 50px;
+      border: 2px solid #e0e0e0;
+      border-radius: 50px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s ease;
+      box-shadow: var(--card-shadow);
+      background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%232c3e50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>') no-repeat 15px center;
+      color: var(--text-color);
+    }
+
+    #searchInput:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    .gallery-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 0 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 20px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-size: 14px;
+    }
+
+    .filter-btn.active {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .photo {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: all var(--transition-speed) ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .photo:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+
+    .photo img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .photo-info {
+      padding: 15px;
+    }
+
+    .photo-info h3 {
+      margin: 0 0 8px 0;
+      color: var(--primary-color);
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+
+    .photo-info p {
+      margin: 0;
+      color: #7f8c8d;
+      font-size: 0.9em;
+    }
+
+    .photo-tags {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      display: inline-block;
+      background-color: var(--accent-color);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.7em;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 0;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: var(--light-text);
+      margin-top: 40px;
+      border-radius: 0;
+      position: relative;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+
+    .social-links {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .social-links a {
+      color: white;
+      font-size: 1.1em;
+      display: inline-block;
+      padding: 5px;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      overflow: auto;
+      justify-content: center;
+      align-items: center;
+      touch-action: none;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-img {
+      max-width: 100%;
+      max-height: 60vh;
+      object-fit: contain;
+      border-radius: 5px;
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+
+    .modal-info {
+      color: white;
+      padding: 15px;
+      width: 100%;
+      max-width: 100%;
+      margin: 15px auto 0;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 0;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-info h3 {
+      margin: 0 0 8px;
+      font-size: 1.3em;
+      font-weight: 300;
+    }
+
+    .modal-info p {
+      margin: 0;
+      opacity: 0.8;
+      font-size: 0.9em;
+    }
+
+    .modal-tags {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .close {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      color: white;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1002;
+      padding: 5px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-controls {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      display: flex;
+      gap: 10px;
+      z-index: 1002;
+    }
+
+    .modal-btn {
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      background-color: rgba(0,0,0,0.5);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Floating action button */
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: var(--accent-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 3px 15px rgba(52, 152, 219, 0.4);
+      cursor: pointer;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .fab.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Loader styles */
+    .loader-container {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .loader {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
+      border-top: 4px solid var(--accent-color);
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Touch optimizations */
+    .photo img {
+      touch-action: manipulation;
+    }
+
+    /* Responsive adjustments */
+    @media (min-width: 480px) {
+      .photo img {
+        height: 220px;
+      }
+      
+      .modal-img {
+        max-height: 65vh;
+      }
+      
+      .modal-info {
+        max-width: 90%;
+        border-radius: 10px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      header {
+        padding: 35px 0;
+        border-radius: 0 0 15px 15px;
+      }
+      
+      h1 {
+        font-size: 2.4em;
+      }
+      
+      header p {
+        font-size: 1.1em;
+      }
+      
+      .search-container {
+        max-width: 600px;
+        padding: 0;
+      }
+      
+      .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+      
+      .photo img {
+        height: 250px;
+      }
+      
+      .photo-info {
+        padding: 18px;
+      }
+      
+      .modal-img {
+        max-height: 70vh;
+      }
+      
+      .modal-info {
+        max-width: 80%;
+        padding: 20px;
+      }
+      
+      .modal-info h3 {
+        font-size: 1.5em;
+      }
+      
+      .close {
+        top: 20px;
+        right: 20px;
+      }
+      
+      .modal-controls {
+        top: 20px;
+        left: 20px;
+      }
+      
+      footer {
+        border-radius: 15px 15px 0 0;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+      }
+      
+      .photo img {
+        height: 280px;
+      }
+      
+      .modal-img {
+        max-height: 75vh;
+      }
+      
+      .close {
+        font-size: 35px;
+      }
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent-color);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Mahmoud Al-Hobi</h1>
+      <p>Professional Photography Portfolio - Capturing Moments, Creating Memories</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search photos by title, tags or date...">
+    </div>
+    
+    <div class="gallery-controls">
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="nature">Nature</button>
+        <button class="filter-btn" data-filter="urban">Urban</button>
+        <button class="filter-btn" data-filter="portrait">Portrait</button>
+      </div>
+    </div>
+    
+    <div class="loader-container" id="galleryLoader">
+      <div class="loader"></div>
+    </div>
+    
+    <section class="gallery" id="photoGallery"></section>
+  </div>
+
+  <div id="imageModal" class="modal" onclick="handleModalClick(event)">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="modal-controls">
+      
+        <div class="modal-btn" onclick="shareImage()" title="Share">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+        </div>
+      </div>
+      <img id="expandedImg" class="modal-img" />
+      <div class="modal-info">
+        <h3 id="modalTitle"></h3>
+        <p id="modalDate"></p>
+        <div class="modal-tags" id="modalTags"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fab" id="scrollToTop" title="Back to Top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="currentYear"></span> Mahmoud Al-Hobi Photography. All Rights Reserved.</p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/abu_nader.kr1?igsh=ZHo0Yzh0NThncjl2" target="_blank" rel="noopener noreferrer" title="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/share/1NhqF4ERY1/" target="_blank" rel="noopener noreferrer" title="Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+          </svg>
+        </a>
+        <a href="https://wa.me/qr/D6PIJXK6UVM2K1" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-9-9 9 9 0 0 1 9-9c2.5 0 4.8 1 6.5 2.6L17 8"></path>
+            <path d="M16 12h.01"></path>
+            <path d="M12 12h.01"></path>
+            <path d="M8 12h.01"></path>
+          </svg>
+        </a>
+        <a href="mailto:abunader.kr1@gmail.com" title="Email">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Enhanced photo data with categories
+    const photoData = [
+      { id: 1, title: "Golden Sunset at Beach", date: "January 15, 2024", tags: ["nature", "sunset", "beach"], category: "nature" },
+      { id: 2, title: "City Skyline at Dusk", date: "January 20, 2024", tags: ["urban", "architecture", "city"], category: "urban" },
+      { id: 3, title: "Mountain Majesty", date: "February 5, 2024", tags: ["nature", "mountains", "landscape"], category: "nature" },
+      { id: 4, title: "Street Life", date: "February 12, 2024", tags: ["urban", "people", "street"], category: "urban" },
+      { id: 5, title: "Portrait of Wisdom", date: "March 3, 2024", tags: ["portrait", "people", "face"], category: "portrait" },
+      // Add more photos with similar structure up to 99
+      // For demo purposes, we'll duplicate some entries
+      ...Array.from({length: 70}, (_, i) => ({
+        id: i + 6,
+        title: `Beautiful Moment ${i + 6}`,
+        date: `March ${(i % 30) + 1}, 2024`,
+        tags: i % 3 === 0 ? ["nature", "landscape"] : i % 3 === 1 ? ["urban", "city"] : ["portrait", "people"],
+        category: i % 3 === 0 ? "nature" : i % 3 === 1 ? "urban" : "portrait"
+      }))
+    ];
+
+    let currentImageForDownload = null;
+
+    // Initialize the gallery
+    function initGallery() {
+      const gallery = document.getElementById("photoGallery");
+      const loader = document.getElementById("galleryLoader");
+      
+      // Show loader
+      loader.style.display = "flex";
+      gallery.innerHTML = "";
+      
+      // Simulate loading delay for demo purposes
+      setTimeout(() => {
+        photoData.forEach(photoInfo => {
+          const src = `${photoInfo.id}.png`;
+
+          const photoDiv = document.createElement("div");
+          photoDiv.className = "photo";
+          photoDiv.setAttribute("data-title", photoInfo.title.toLowerCase());
+          photoDiv.setAttribute("data-tags", photoInfo.tags.join(","));
+          photoDiv.setAttribute("data-category", photoInfo.category);
+
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = photoInfo.title;
+          img.loading = "lazy";
+          img.onclick = function() {
+            openModal(this.src, photoInfo);
+          };
+
+          img.onerror = function() {
+            this.parentElement.style.display = 'none';
+          };
+
+          const infoDiv = document.createElement("div");
+          infoDiv.className = "photo-info";
+
+          const h3 = document.createElement("h3");
+          h3.textContent = photoInfo.title;
+
+          const p = document.createElement("p");
+          p.textContent = photoInfo.date;
+
+          const tagsDiv = document.createElement("div");
+          tagsDiv.className = "photo-tags";
+          photoInfo.tags.forEach(tag => {
+            const tagSpan = document.createElement("span");
+            tagSpan.className = "tag";
+            tagSpan.textContent = tag;
+            tagsDiv.appendChild(tagSpan);
+          });
+
+          infoDiv.appendChild(h3);
+          infoDiv.appendChild(p);
+          infoDiv.appendChild(tagsDiv);
+
+          photoDiv.appendChild(img);
+          photoDiv.appendChild(infoDiv);
+
+          gallery.appendChild(photoDiv);
+        });
+        
+        // Hide loader
+        loader.style.display = "none";
+        
+        // Initialize filter buttons
+        initFilterButtons();
+      }, 800);
+    }
+
+    // Initialize filter buttons
+    function initFilterButtons() {
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      
+      filterButtons.forEach(button => {
+        button.addEventListener("click", function() {
+          // Remove active class from all buttons
+          filterButtons.forEach(btn => btn.classList.remove("active"));
+          // Add active class to clicked button
+          this.classList.add("active");
+          
+          const filter = this.getAttribute("data-filter");
+          filterGallery(filter);
+        });
+      });
+    }
+
+    // Filter gallery by category
+    function filterGallery(category) {
+      const photos = document.querySelectorAll(".photo");
+      
+      photos.forEach(photo => {
+        if (category === "all" || photo.getAttribute("data-category") === category) {
+          photo.style.display = "block";
+        } else {
+          photo.style.display = "none";
+        }
+      });
+    }
+
+    // Search functionality
+    document.getElementById("searchInput").addEventListener("input", function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const photos = document.querySelectorAll(".photo");
+      
+      photos.forEach(photo => {
+        const title = photo.getAttribute("data-title");
+        const tags = photo.getAttribute("data-tags");
+        const date = photo.querySelector("p").textContent.toLowerCase();
+        
+        if (title.includes(searchTerm) || tags.includes(searchTerm) || date.includes(searchTerm)) {
+          photo.style.display = "block";
+        } else {
+          photo.style.display = "none";
+        }
+      });
+    });
+
+    // Open modal with photo
+    function openModal(src, photoInfo) {
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("expandedImg");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalDate = document.getElementById("modalDate");
+      const modalTags = document.getElementById("modalTags");
+
+      modalImg.src = src;
+      modalTitle.textContent = photoInfo.title;
+      modalDate.textContent = photoInfo.date;
+      
+      // Clear and rebuild tags
+      modalTags.innerHTML = "";
+      photoInfo.tags.forEach(tag => {
+        const tagSpan = document.createElement("span");
+        tagSpan.className = "tag";
+        tagSpan.textContent = tag;
+        modalTags.appendChild(tagSpan);
+      });
+      
+      modal.classList.add("show");
+      currentImageForDownload = src;
+      document.body.style.overflow = "hidden";
+    }
+
+    // Close modal
+    function closeModal() {
+      document.getElementById("imageModal").classList.remove("show");
+      currentImageForDownload = null;
+      document.body.style.overflow = "auto";
+    }
+
+    // Handle modal background click
+function handleModalClick(event) {
+  // تحقق مما إذا كان النقر على الخلفية (المنطقة السوداء) وليس على الصورة أو محتوى المعلومات
+  if (event.target.id === "imageModal" || 
+      event.target.classList.contains("modal-content") || 
+      event.target.classList.contains("modal-info")) {
+    closeModal();
+  }
+  event.stopPropagation();
+}
+
+
+    // Share image
+    function shareImage() {
+      if (!currentImageForDownload) return;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: document.getElementById("modalTitle").textContent,
+          text: 'Check out this amazing photo from Mahmoud Al-Hobi',
+          url: currentImageForDownload,
+        }).catch(err => {
+          console.log('Error sharing:', err);
+        });
+      } else {
+        // Fallback for browsers that don't support Web Share API
+        const shareUrl = `mailto:?subject=${encodeURIComponent('Photo by Mahmoud Al-Hobi')}&body=${encodeURIComponent(`Check out this photo: ${currentImageForDownload}`)}`;
+        window.location.href = shareUrl;
+      }
+    }
+
+    // Scroll to top button
+    const scrollToTopBtn = document.getElementById("scrollToTop");
+    
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add("visible");
+      } else {
+        scrollToTopBtn.classList.remove("visible");
+      }
+    });
+    
+    scrollToTopBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Initialize the gallery when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      initGallery();
+      
+      // Prevent zooming on mobile devices
+      document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+      });
+      
+      // Prevent double tap zoom
+      let lastTap = 0;
+      document.addEventListener('touchend', function(e) {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+        if (tapLength < 300 && tapLength > 0) {
+          e.preventDefault();
+        }
+        lastTap = currentTime;
+      });
+    });
+  </script>
+</body>
+</html>
