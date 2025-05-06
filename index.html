@@ -223,7 +223,7 @@
       padding: 5px;
     }
 
-    /* Modal Styles */
+    
     .modal {
       display: none;
       position: fixed;
@@ -337,7 +337,7 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
 
-    /* Floating action button */
+    
     .fab {
       position: fixed;
       bottom: 20px;
@@ -364,7 +364,8 @@
       visibility: visible;
     }
 
-    /* Loader styles */
+   
+  
     .loader-container {
       display: none;
       justify-content: center;
@@ -386,12 +387,11 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Touch optimizations */
+   
     .photo img {
       touch-action: manipulation;
     }
 
-    /* Responsive adjustments */
     @media (min-width: 480px) {
       .photo img {
         height: 220px;
@@ -490,7 +490,6 @@
       }
     }
 
-    /* Scrollbar styling */
     ::-webkit-scrollbar {
       width: 8px;
     }
@@ -603,18 +602,14 @@
   </footer>
 
   <script>
-    // Set current year in footer
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    // Enhanced photo data with categories
     const photoData = [
       { id: 1, title: "Golden Sunset at Beach", date: "January 15, 2024", tags: ["nature", "sunset", "beach"], category: "nature" },
       { id: 2, title: "City Skyline at Dusk", date: "January 20, 2024", tags: ["urban", "architecture", "city"], category: "urban" },
       { id: 3, title: "Mountain Majesty", date: "February 5, 2024", tags: ["nature", "mountains", "landscape"], category: "nature" },
       { id: 4, title: "Street Life", date: "February 12, 2024", tags: ["urban", "people", "street"], category: "urban" },
       { id: 5, title: "Portrait of Wisdom", date: "March 3, 2024", tags: ["portrait", "people", "face"], category: "portrait" },
-      // Add more photos with similar structure up to 99
-      // For demo purposes, we'll duplicate some entries
       ...Array.from({length: 70}, (_, i) => ({
         id: i + 6,
         title: `Beautiful Moment ${i + 6}`,
@@ -626,16 +621,13 @@
 
     let currentImageForDownload = null;
 
-    // Initialize the gallery
     function initGallery() {
       const gallery = document.getElementById("photoGallery");
       const loader = document.getElementById("galleryLoader");
       
-      // Show loader
       loader.style.display = "flex";
       gallery.innerHTML = "";
       
-      // Simulate loading delay for demo purposes
       setTimeout(() => {
         photoData.forEach(photoInfo => {
           const src = `${photoInfo.id}.png`;
@@ -686,23 +678,18 @@
           gallery.appendChild(photoDiv);
         });
         
-        // Hide loader
         loader.style.display = "none";
         
-        // Initialize filter buttons
         initFilterButtons();
       }, 800);
     }
 
-    // Initialize filter buttons
     function initFilterButtons() {
       const filterButtons = document.querySelectorAll(".filter-btn");
       
       filterButtons.forEach(button => {
         button.addEventListener("click", function() {
-          // Remove active class from all buttons
           filterButtons.forEach(btn => btn.classList.remove("active"));
-          // Add active class to clicked button
           this.classList.add("active");
           
           const filter = this.getAttribute("data-filter");
@@ -711,7 +698,6 @@
       });
     }
 
-    // Filter gallery by category
     function filterGallery(category) {
       const photos = document.querySelectorAll(".photo");
       
@@ -724,7 +710,6 @@
       });
     }
 
-    // Search functionality
     document.getElementById("searchInput").addEventListener("input", function(e) {
       const searchTerm = e.target.value.toLowerCase();
       const photos = document.querySelectorAll(".photo");
@@ -824,16 +809,13 @@ function handleModalClick(event) {
       });
     });
 
-    // Initialize the gallery when page loads
     document.addEventListener('DOMContentLoaded', function() {
       initGallery();
       
-      // Prevent zooming on mobile devices
       document.addEventListener('gesturestart', function(e) {
         e.preventDefault();
       });
       
-      // Prevent double tap zoom
       let lastTap = 0;
       document.addEventListener('touchend', function(e) {
         const currentTime = new Date().getTime();
