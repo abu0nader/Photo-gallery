@@ -727,7 +727,6 @@
       });
     });
 
-    // Open modal with photo
     function openModal(src, photoInfo) {
       const modal = document.getElementById("imageModal");
       const modalImg = document.getElementById("expandedImg");
@@ -739,7 +738,7 @@
       modalTitle.textContent = photoInfo.title;
       modalDate.textContent = photoInfo.date;
       
-      // Clear and rebuild tags
+    
       modalTags.innerHTML = "";
       photoInfo.tags.forEach(tag => {
         const tagSpan = document.createElement("span");
@@ -753,16 +752,14 @@
       document.body.style.overflow = "hidden";
     }
 
-    // Close modal
+
     function closeModal() {
       document.getElementById("imageModal").classList.remove("show");
       currentImageForDownload = null;
       document.body.style.overflow = "auto";
     }
 
-    // Handle modal background click
 function handleModalClick(event) {
-  // تحقق مما إذا كان النقر على الخلفية (المنطقة السوداء) وليس على الصورة أو محتوى المعلومات
   if (event.target.id === "imageModal" || 
       event.target.classList.contains("modal-content") || 
       event.target.classList.contains("modal-info")) {
@@ -772,7 +769,7 @@ function handleModalClick(event) {
 }
 
 
-    // Share image
+
     function shareImage() {
       if (!currentImageForDownload) return;
       
@@ -785,13 +782,11 @@ function handleModalClick(event) {
           console.log('Error sharing:', err);
         });
       } else {
-        // Fallback for browsers that don't support Web Share API
         const shareUrl = `mailto:?subject=${encodeURIComponent('Photo by Mahmoud Al-Hobi')}&body=${encodeURIComponent(`Check out this photo: ${currentImageForDownload}`)}`;
         window.location.href = shareUrl;
       }
     }
 
-    // Scroll to top button
     const scrollToTopBtn = document.getElementById("scrollToTop");
     
     window.addEventListener('scroll', function() {
